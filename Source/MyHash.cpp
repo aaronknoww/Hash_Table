@@ -45,6 +45,18 @@ void Myhash<TD>::imprimirTabla()
 }
 
 template<typename TD>
+bool Myhash<TD>::buscarDato(TD dato)
+{
+	if (_buscarAux(dato)>=0)
+		return true;
+	else
+		return false;
+}
+
+
+//-------------------- FUNCIONES AUXILIARES PRIVADAS DE LA CLASE ------------------------------//
+
+template<typename TD>
 int Myhash<TD>::_funcionHash(TD& dato)
 {
 	// dato---> Es el dato que quiere introducir el usuario a la tabla hash y que se va a convertir en un indice. 
@@ -147,6 +159,20 @@ bool Myhash<TD>::_rehashing()
 
 	//!!!!!!!!!falta hacer codigo en el caso de que no haya suficiente memoria. una excepcion o algo.
 
+}
+
+template<typename TD>
+int Myhash<TD>::_buscarAux(TD& dato)
+{
+	
+	for (int i = 0; i < maximo; i++)
+	{
+		int index = _doubleHash(dato, i);
+		(index < maximo) ? index : index -= maximo;//Si se pasa del numero maximo del arrglo, lo regresa al incio del mismo.
+		if (dato == p_tabla[index])//Verifica si lo que está en la tabla en la posisón del indice es igual al dato buscado.
+			return index;
+	}
+	return -101;// No se encontro el elmento en la tabla, por eso se regresa un valor negativo
 }
 
 

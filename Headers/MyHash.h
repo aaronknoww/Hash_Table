@@ -7,6 +7,7 @@ public:
 	Myhash();
 	bool insertar(TD);
 	void imprimirTabla();// imprime todos los elementos de la tabla
+	bool buscarDato(TD);
 	//~Myhash();
 
 private:
@@ -26,6 +27,7 @@ private:
 	int _calculoDeCarga();// Regresa el factor de carga actual de la tabla Hash.
 	bool _insertarAux(TD&);
 	bool _rehashing();// Aumenta el tamaño del arreglo en la siguiente potencia de 2 ademas de reicertar todos los elementos.
+	int _buscarAux(TD&);// Regresa el indice donde se encuentra el dato buscado o un -1 si no se encuentra.
 };
 
 // La función que se utilizará para el manejo de colisiones será dependiente de la clave. 

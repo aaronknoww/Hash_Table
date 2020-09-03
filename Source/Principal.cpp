@@ -19,7 +19,13 @@ int main()
 	cout << "\n\n" << endl;
 	tabla.insertar(13);
 	tabla.imprimirTabla();
-	//!!!!!!!!!!!!!!! NECESITO DEPURAR Y VER QUE PASA DESPUES DE SALIR DE LA FUCION REHASHING!!!!!!!
+	if (tabla.buscarDato(1010))
+		cout << "\n\n Si se encontro el dato " << endl;
+	else
+		cout << "\n\n Valiste merga " << endl;
+	
+	
+		
 	cout << "\nhello mother fuckers, Aaron Knoww was here" << endl;
 	system("pause > null");
 
