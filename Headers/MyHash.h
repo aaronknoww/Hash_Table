@@ -6,6 +6,7 @@ class Myhash
 public:
 	Myhash();
 	bool insertar(TD);
+	void imprimirTabla();// imprime todos los elementos de la tabla
 	//~Myhash();
 
 private:

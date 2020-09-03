@@ -15,8 +15,10 @@ int main()
 	tabla.insertar(24);
 	tabla.insertar(10);
 	tabla.insertar(1);
+	tabla.imprimirTabla();
+	cout << "\n\n" << endl;
 	tabla.insertar(13);
-
+	tabla.imprimirTabla();
 	//!!!!!!!!!!!!!!! NECESITO DEPURAR Y VER QUE PASA DESPUES DE SALIR DE LA FUCION REHASHING!!!!!!!
 	cout << "\nhello mother fuckers, Aaron Knoww was here" << endl;
 	system("pause > null");

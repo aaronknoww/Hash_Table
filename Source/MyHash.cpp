@@ -35,6 +35,16 @@ bool Myhash<TD>::insertar(TD dato)
 }
 
 template<typename TD>
+void Myhash<TD>::imprimirTabla()
+{
+	for (int i = 0; i < maximo; i++)
+	{
+		std::cout << " " << p_tabla[i];
+	}
+	return;
+}
+
+template<typename TD>
 int Myhash<TD>::_funcionHash(TD& dato)
 {
 	// dato---> Es el dato que quiere introducir el usuario a la tabla hash y que se va a convertir en un indice. 
@@ -128,7 +138,7 @@ bool Myhash<TD>::_rehashing()
 	for (int i = 0; i < maximo; i++)
 	{
 		if (auxiliar[i] != -1)
-			_insertarAux(p_tabla[i]);
+			_insertarAux(auxiliar[i]);
 	}
 	maximo *= 2;
 	delete[]auxiliar;
