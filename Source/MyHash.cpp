@@ -17,7 +17,7 @@ Myhash<TD>::Myhash()
 template<typename TD>
 bool Myhash<TD>::insertar(TD dato)
 {
-	if (factor_carga> _calculoDeCarga())
+	if (factor_carga > _calculoDeCarga())
 	{
 		// Significa que todavia se puede insertar
 		return _insertarAux(dato);
@@ -51,6 +51,31 @@ bool Myhash<TD>::buscarDato(TD dato)
 		return true;
 	else
 		return false;
+}
+
+template<typename TD>
+bool Myhash<TD>::eliminar(TD dato)
+{
+	int index = _buscarAux(dato);// Regresa la posisión del elemento o un numero negativo si no existe.
+	if (index >= 0)
+	{
+		//Como el valor es mayor que un número negativo, entonces si exisite la clave y la borra.
+		p_tabla[index] = -1;
+		cont_e--;
+		if (_calculoDeCarga()<25)
+			return _rehashingDown();// Como el factor de carga es menor que el 25% se libera memoria virtual.
+		else
+			return true;
+	}
+	else
+		return false;
+}
+
+template<typename TD>
+Myhash<TD>::~Myhash()
+{
+	delete[] p_tabla; //Libera memoria virtual
+	p_tabla = nullptr;
 }
 
 
@@ -96,6 +121,9 @@ int Myhash<TD>::_calculoDeCarga()
 template<typename TD>
 bool Myhash<TD>::_insertarAux(TD& dato)
 {
+	if (_buscarAux(dato) >= 0)
+		return false;// No permite insertar datos iguales.
+
 	int index = _funcionHash(dato);
 
 	if (p_tabla[index] == -1)
@@ -134,7 +162,7 @@ bool Myhash<TD>::_insertarAux(TD& dato)
 template<typename TD>
 bool Myhash<TD>::_rehashing()
 {
-	TD* auxiliar = new TD[maximo]; //Crea un arreglo del doble que el anterior.
+	TD* auxiliar = new TD[maximo]; 
 	int cont_aux = cont_e;
 
 	for (int i = 0; i < maximo; i++)
@@ -142,7 +170,7 @@ bool Myhash<TD>::_rehashing()
 	
 	delete[]p_tabla;// se libera la mememoria
 	
-	p_tabla = new TD[maximo*2];// Se reserva memoria para el nuevo arreglo.
+	p_tabla = new TD[maximo*2];// Se reserva el doble de memoria para el nuevo arreglo.
 	for (int i = 0; i < maximo*2; i++)
 		p_tabla[i]=-1; //Inicializa todo el arreglo.
 	
@@ -159,6 +187,34 @@ bool Myhash<TD>::_rehashing()
 
 	//!!!!!!!!!falta hacer codigo en el caso de que no haya suficiente memoria. una excepcion o algo.
 
+}
+
+template<typename TD>
+bool Myhash<TD>::_rehashingDown()
+{
+	TD* auxiliar = new TD[maximo]; //Crea un arreglo del doble que el anterior.
+	int cont_aux = cont_e;
+
+	for (int i = 0; i < maximo; i++)
+		auxiliar[i] = p_tabla[i];// Copia todo el arreglo para poder agrandar el arreglo de la clase. 
+
+	delete[]p_tabla;// se libera la mememoria
+
+	p_tabla = new TD[maximo / 2];// Se reserva la mitad de la cantidad de memoria para el nuevo arreglo.
+	for (int i = 0; i < maximo / 2; i++)
+		p_tabla[i] = -1; //Inicializa todo el arreglo.
+
+	cont_e = 0;//Como es una variable que utiliza _insertarAux, se inicializa en cero para evitar error.
+	for (int i = 0; i < maximo; i++)
+	{
+		if (auxiliar[i] != -1)
+			_insertarAux(auxiliar[i]);
+	}
+	maximo /= 2;
+	delete[]auxiliar;
+	auxiliar = nullptr;
+	return true;
+	
 }
 
 template<typename TD>

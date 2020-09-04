@@ -8,7 +8,8 @@ public:
 	bool insertar(TD);
 	void imprimirTabla();// imprime todos los elementos de la tabla
 	bool buscarDato(TD);
-	//~Myhash();
+	bool eliminar(TD);
+	~Myhash();
 
 private:
 
@@ -27,9 +28,13 @@ private:
 	int _calculoDeCarga();// Regresa el factor de carga actual de la tabla Hash.
 	bool _insertarAux(TD&);
 	bool _rehashing();// Aumenta el tamaño del arreglo en la siguiente potencia de 2 ademas de reicertar todos los elementos.
+	bool _rehashingDown();// Libera memoria cuando se han eliminado muchos elementos.
 	int _buscarAux(TD&);// Regresa el indice donde se encuentra el dato buscado o un -1 si no se encuentra.
+	
 };
 
+
+// ----------------------N O T A S -------------------------------------\\
 // La función que se utilizará para el manejo de colisiones será dependiente de la clave. 
 // Para garantizar una distribución correcta, el tamanio de la tabla debe de ser una potencia de 2
 // D siempre debe de ser un número impar d= k div max  int d=k/max.
